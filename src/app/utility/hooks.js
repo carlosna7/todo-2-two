@@ -9,10 +9,11 @@ export const useForm = (callback, initialState = {}) => {
         setValues({ ...values, [e.target.name]: e.target.value })
         console.log(values)
     }
-
+    
     const onSubmit = (e) => {
         e.preventDefault()
         callback()
+        console.log(values)
     }
 
     return { onChange, onSubmit, values}

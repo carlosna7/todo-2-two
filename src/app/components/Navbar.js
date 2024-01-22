@@ -1,7 +1,22 @@
-import React from 'react'
+'use client'
+
+import React, { useContext } from 'react'
 import Link from "next/link"
+import { AuthContext } from '../context/authContext'
+import { useRouter } from 'next/navigation'
 
 const Navbar = () => {
+
+  let router = useRouter()
+  const { user, logout } = useContext(AuthContext)
+
+  const onLogout = () => {
+    logout()
+    router.push("/")
+  } 
+
+  console.log(user)
+
   return (
     <div className="bg-gray-300 flex justify-between px-20 p-4 items-center">
 

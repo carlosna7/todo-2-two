@@ -25,7 +25,7 @@ const register = (props) => {
   let router = useRouter() 
   const [ errors, setErrors ] = useState([])
 
-  function registerUserCallback(event) {
+  function registerUserCallback() {
     // event.preventDefault()
     console.log('callback aqui')
     signUp()
@@ -57,25 +57,25 @@ const register = (props) => {
       <form onSubmit={onSubmit}>
         <label className='bg-gray-100'>
           Email:
-          <input className='bg-cyan-100' type="email" name="email" value={values.email} onChange={onChange} />
+          <input className='bg-cyan-100' type="email" name="email" onChange={onChange} />
         </label>
-        <br />
+
         <label className='bg-gray-100'>
           Name:
-          <input className='bg-cyan-100' type="text" name="name" value={values.name} onChange={onChange} />
+          <input className='bg-cyan-100' type="text" name="name" onChange={onChange} />
         </label>
-        <br />
+
         <label className='bg-gray-100'>
           Password:
-          <input className='bg-cyan-100' type="password" name="password" value={values.password} onChange={onChange} />
+          <input className='bg-cyan-100' type="password" name="password" onChange={onChange} />
         </label>
-        <br />
+
         <label className='bg-gray-100'>
           Permission:
-          <input className='bg-cyan-100' type="text" name="permission" value={values.permission} onChange={onChange} />
+          <input className='bg-cyan-100' type="text" name="permission" onChange={onChange} />
         </label>
-        <br />
-        <button type="submit" disabled={loading}>
+        
+        <button type="submit">
           Register
         </button>
       </form>
