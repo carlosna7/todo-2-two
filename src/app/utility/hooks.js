@@ -1,3 +1,5 @@
+'use client'
+
 import { useState } from "react"
 
 export const useForm = (callback, initialState = {}) => {
@@ -5,6 +7,7 @@ export const useForm = (callback, initialState = {}) => {
 
     const onChange = (e) => {
         setValues({ ...values, [e.target.name]: e.target.value })
+        console.log(values)
     }
 
     const onSubmit = (e) => {

@@ -48,6 +48,7 @@ function AuthProvider(props) {
     const [ state, dispatch ] = useReducer(authReducer, initialState)
 
     const login = (userData) => {
+        console.log(userData)
         localStorage.setItem("token", userData.token)
         dispatch({
             type: 'LOGIN',
