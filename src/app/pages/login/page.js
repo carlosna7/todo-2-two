@@ -37,7 +37,7 @@ const login = (props) => {
   const [ signIn, { loading } ] = useMutation(LOGIN_USER, {
     update(proxy, { data: { signIn: userData}}) {
       context.login(userData)
-      router.push("/")
+      router.push("/pages/dashboard")
     },
     onError({ graphQlErrors }) {
       setErrors(graphQlErrors)
@@ -62,7 +62,7 @@ const login = (props) => {
         </label>
        
         <button type="submit">
-          Register
+          Login
         </button>
       </form>
 

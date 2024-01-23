@@ -29,10 +29,12 @@ if(token) {
 const AuthContext = createContext({
     user: null,
     login: (userData) => {},
+    register: (userData) => {},
     logout: () => {}
 }) 
 
 function authReducer(state, action) {
+    console.log("3")
     switch(action.type) {
         case 'LOGIN':
             return {
@@ -56,7 +58,9 @@ function AuthProvider(props) {
 
     const login = (userData) => {
         
-        console.log(userData)
+        // console.log(userData)
+
+        console.log("2")
 
         localStorage.setItem("token", userData.token)
         dispatch({
@@ -65,7 +69,17 @@ function AuthProvider(props) {
         })
     }
 
-    function logout () {
+    const register = (userData) => {
+        
+        console.log("1")
+
+        dispatch({
+            type: 'LOGIN',
+            payload: userData
+        })
+    }
+
+    const logout =  () => {
         localStorage.removeItem("token")
         dispatch({
             type: 'LOGOUT'
@@ -74,7 +88,7 @@ function AuthProvider(props) {
 
     return (
         <AuthContext.Provider 
-            value={{ user: state.user, login, logout }}
+            value={{ user: state.user, login, register, logout }}
             {...props}
         />
     )

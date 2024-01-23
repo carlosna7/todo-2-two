@@ -10,12 +10,15 @@ const Navbar = () => {
   let router = useRouter()
   const { user, logout } = useContext(AuthContext)
 
+  const token = localStorage.getItem("token")
+
   const onLogout = () => {
     logout()
     router.push("/")
   } 
 
   console.log(user)
+  console.log(token)
 
   return (
     <div className="bg-gray-300 flex justify-between px-20 p-4 items-center">
@@ -29,9 +32,19 @@ const Navbar = () => {
         <ul className="flex gap-8">
           
           <div className="rounded bg-gray-100 p-2">
-            {user ?
+            {user && token ?
               <>
-                <button></button>
+                <li className="rounded bg-gray-100 p-2">
+                  <Link href="/pages/dashboard/items">
+                  items
+                  </Link>
+                </li>
+                <li className="rounded bg-gray-100 p-2">
+                  <Link href="/pages/dashboard/teste">
+                  teste
+                  </Link>
+                </li>
+                <button onClick={onLogout}>logout</button>
               </>
             :
             <>
