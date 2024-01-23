@@ -27,16 +27,28 @@ const Navbar = () => {
         </div>
 
         <ul className="flex gap-8">
-        <li className="rounded bg-gray-100 p-2">
-            <Link href="/pages/login">
-            Login
-            </Link>
-        </li>
-        <li className="rounded bg-gray-100 p-2">
-            <Link href="/pages/register">
-            Register
-            </Link>
-        </li>
+          
+          <div className="rounded bg-gray-100 p-2">
+            {user ?
+              <>
+                <button></button>
+              </>
+            :
+            <>
+              <li className="rounded bg-gray-100 p-2">
+                <Link href="/pages/login">
+                Login
+                </Link>
+              </li>
+              <li className="rounded bg-gray-100 p-2">
+                <Link href="/pages/register">
+                Register
+                </Link>
+              </li>
+            </>
+            }
+          </div>
+
         </ul>
 
     </div>
