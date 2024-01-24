@@ -12,7 +12,7 @@ const dashboard = () => {
         
         {user ?
         <>
-            <p> {user.email} is logged in</p>
+            <p> {user.name} is logged in</p>
         </>
         
         :

@@ -11,6 +11,7 @@ const LOGIN_USER = gql `
   mutation SignIn($loginInput: LoginInput) {
     signIn(loginInput: $loginInput) {
       email
+      name
       password
       token
     }
@@ -26,7 +27,7 @@ const login = (props) => {
   function loginUserCallback() {
     // event.preventDefault()
     console.log('callback aqui')
-    signIn()
+    signInUser()
   }
 
   const { onChange, onSubmit, values } = useForm(loginUserCallback, {
@@ -34,9 +35,9 @@ const login = (props) => {
     password: ''
   })
 
-  const [ signIn, { loading } ] = useMutation(LOGIN_USER, {
-    update(proxy, { data: { signIn: userData}}) {
-      context.login(userData)
+  const [ signInUser ] = useMutation(LOGIN_USER, {
+    update(proxy, { data: { signIn: data}}) {
+      context.login(data)
       router.push("/pages/dashboard")
     },
     onError({ graphQlErrors }) {

@@ -38,9 +38,9 @@ const register = (props) => {
     permission: ''
   })
 
-  const [ signUp, { loading } ] = useMutation(REGISTER_USER, {
-    update(proxy, { data: { signUp: userData}}) {
-      context.register(userData)
+  const [ signUp ] = useMutation(REGISTER_USER, {
+    update(proxy, { data: { signUp: data}}) {
+      context.register(data)
       router.push("/pages/login")
     },
     onError({ graphQlErrors }) {
