@@ -1,31 +1,22 @@
 'use client'
 
+import SelectComponent from '@/app/components/SelectComponent'
 import { AuthContext } from '@/app/context/authContext'
-import React, { useContext, useEffect } from 'react'
-import { gql, useQuery } from '@apollo/client'
+import React, { useContext, useState } from 'react'
 
-const GET_USER = gql`
-    query Query($amount: Int) {
-        getUsers(amount: $amount) {
-            id
-            name
-        }
-    }
-`;
 
 const dashboard = () => {
 
     const { user, logout } = useContext(AuthContext)
 
-    const { loading, error, data } = useQuery(GET_USER, {
-        variables: { amount: 3 },
-    });
+    const [selectedValue, setSelectedValue] = useState([]);
 
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error: {error.message}</p>;
+    const handleSelectChange = (selectedList) => {
+        setSelectedValue(selectedList);
+    }
 
-    const users = data.getUsers
-    console.log(data)
+    console.log(selectedValue)
+
 
     return (
 
@@ -41,27 +32,7 @@ const dashboard = () => {
             </>
             }
 
-            <select>
-                <option>Selecione um usuário</option>
-
-                {users.forEach(user => {
-                    // <option key={user.id} value={user.id}>
-                    //     {user.name}
-                    // </option>
-
-                    <p></p>
-
-                })}
-
-            </select>   
-
-            <div>
-            {users.map(user => {
-                
-                    
-
-            })}
-            </div>   
+            <SelectComponent onSelectChange={handleSelectChange} selectedValues={selectedValue} />
 
         </>
     )
