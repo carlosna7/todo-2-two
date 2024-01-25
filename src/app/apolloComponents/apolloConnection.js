@@ -10,7 +10,7 @@ export default function ApolloConnection({ children }) {
   const router = usePathname()
 
   useEffect(() => {
-    console.log("mudou de página, favor conferir se o token ainda esta valido")
+    // console.log("mudou de página, favor conferir se o token ainda esta valido")
   }, [router])
 
   return (

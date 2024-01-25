@@ -7,6 +7,7 @@ import { gql, useQuery } from '@apollo/client'
 const GET_USER = gql`
     query Query($amount: Int) {
         getUsers(amount: $amount) {
+            id
             name
         }
     }
@@ -23,11 +24,8 @@ const dashboard = () => {
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error.message}</p>;
 
-    // const users = data.getUsers
+    const users = data.getUsers
     console.log(data)
-    // users.forEach(user => {
-    //     console.log(user.name);
-    // });
 
     return (
 
@@ -42,6 +40,28 @@ const dashboard = () => {
                 <p>There is no user logged</p>
             </>
             }
+
+            <select>
+                <option>Selecione um usuário</option>
+
+                {users.forEach(user => {
+                    // <option key={user.id} value={user.id}>
+                    //     {user.name}
+                    // </option>
+
+                    <p></p>
+
+                })}
+
+            </select>   
+
+            <div>
+            {users.map(user => {
+                
+                    
+
+            })}
+            </div>   
 
         </>
     )

@@ -13,11 +13,9 @@ const token = localStorage.getItem("token")
 
 if(token) {
 
-    console.log(token)
-
     const decodedToken = jwtDecode(token)
 
-    console.log(decodedToken)
+    console.log("mudou de página, favor conferir se o token ainda esta valido")
 
     if(decodedToken.exp * 1000 < Date.now()) {
         localStorage.removeItem("token")
@@ -64,8 +62,6 @@ function AuthProvider(props) {
         
         // console.log(userData)
 
-        console.log("2")
-
         localStorage.setItem("token", userData.token)
         dispatch({
             type: 'LOGIN',
@@ -74,8 +70,6 @@ function AuthProvider(props) {
     }
 
     const register = (userData) => {
-        
-        console.log("1")
 
         dispatch({
             type: 'LOGIN',
