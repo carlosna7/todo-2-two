@@ -15,7 +15,7 @@ if(token) {
 
     const decodedToken = jwtDecode(token)
 
-    console.log("mudou de página, favor conferir se o token ainda esta valido")
+    // console.log("mudou de página, favor conferir se o token ainda esta valido")
 
     if(decodedToken.exp * 1000 < Date.now()) {
         localStorage.removeItem("token")
@@ -32,7 +32,6 @@ const AuthContext = createContext({
 }) 
 
 function authReducer(state, action) {
-    console.log("3")
     switch(action.type) {
         case 'LOGIN':
             return {
@@ -54,9 +53,8 @@ function authReducer(state, action) {
 function AuthProvider(props) {
     const [ state, dispatch ] = useReducer(authReducer, initialState)
 
-    console.log("user")
-    console.log(state)
-    console.log(initialState)
+    // console.log("user")
+    // console.log(state)
 
     const login = (userData) => {
         

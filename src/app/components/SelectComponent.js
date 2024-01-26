@@ -9,6 +9,7 @@ const GET_USER = gql`
         getUsers(amount: $amount) {
             id
             name
+            email
         }
     }
 `;
@@ -27,7 +28,7 @@ const SelectComponent = ({ onSelectChange, selectedValues }) => {
     // console.log(data)
 
     return (
-        <div className='bg-gray-100 w-96 p-4 m-4'>
+        <div className='bg-white '>
 
             <Multiselect
                 options={users}
