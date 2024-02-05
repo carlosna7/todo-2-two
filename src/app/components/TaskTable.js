@@ -1,11 +1,14 @@
+'use client'
+
 import React from 'react'
+import { gql, useQuery } from '@apollo/client'
+
 import { 
     useReactTable,
     getCoreRowModel,
     getPaginationRowModel,
     getSortedRowModel,
 } from '@tanstack/react-table'
-import { gql, useQuery } from '@apollo/client'
 
 const GET_TASKS = gql `
     query GetTasks($amount: Int) {
@@ -43,21 +46,44 @@ const columns = [
 const TaskTable = () => {
 
     const { loading, error, data } = useQuery(GET_TASKS, {
-        variables: { amount: 3 },
+        variables: { amount: 30 },
     })
+
+    if (loading) {
+        return <p>Loading...</p>;
+    }
+
+    if (error) {
+        return <p>Error: {error.message}</p>;
+    }
+
+    const tasksData = data.getTasks
+    
     console.log(data)
 
     // const table = useReactTable(options)
 
     const table = useReactTable({
         columns,
-        data,
+        data: () => tasksData,
         getCoreRowModel: getCoreRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
         getSortedRowModel: getSortedRowModel()
     })
+
     return (
-        <div>table</div>
+        <>
+        {table.getHeaderGroups().map((headerGroup) => (
+            <div key={headerGroup.id}>
+                {headerGroup.headers.map((header) => (
+                    <div key={header.id}>
+                        {header.column.columnDef.header}
+                    </div>
+                ))}
+            </div>
+        ))}
+        </>
+    
     )
 }
 
