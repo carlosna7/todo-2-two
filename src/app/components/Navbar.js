@@ -15,9 +15,7 @@ const Navbar = () => {
   const onLogout = () => {
     logout()
     router.push("/")
-  } 
-
-  console.log(user)
+  }
 
   return (
     <div className="bg-gray-300 flex justify-between px-20 p-4 items-center">

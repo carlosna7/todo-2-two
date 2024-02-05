@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { gql, useQuery } from '@apollo/client'
 
 import { 
@@ -8,6 +8,7 @@ import {
     getCoreRowModel,
     getPaginationRowModel,
     getSortedRowModel,
+    flexRender,
 } from '@tanstack/react-table'
 
 const GET_TASKS = gql `
@@ -23,6 +24,12 @@ const GET_TASKS = gql `
 
 const columns = [
     {
+        accessorKey: 'id',
+        header: 'ID',
+        // size: 1,
+        cell: (props) => <p>{props.getValue()}</p>
+    },
+    {
         accessorKey: 'name',
         header: 'Name',
         cell: (props) => <p>{props.getValue()}</p>
@@ -37,51 +44,57 @@ const columns = [
         header: 'createdAt',
         cell: (props) => <p>{props.getValue()}</p>
     },
-    // {
-    //     accessorKey: row => row.lastName,
-    //     header: () => <span>Last Name</span>,
-    // },
 ]
 
 const TaskTable = () => {
 
     const { loading, error, data } = useQuery(GET_TASKS, {
-        variables: { amount: 30 },
+        variables: { amount: 3 },
     })
 
-    if (loading) {
-        return <p>Loading...</p>;
-    }
+    const [ taskData, setTaskData ] = useState()
 
-    if (error) {
-        return <p>Error: {error.message}</p>;
-    }
+    useEffect(() => {
 
-    const tasksData = data.getTasks
-    
-    console.log(data)
+        if (!loading && !error) {
+            setTaskData(data.getTasks);
+        }
 
-    // const table = useReactTable(options)
+    }, [loading, error, data]);
+
+    console.log(taskData)
 
     const table = useReactTable({
         columns,
-        data: () => tasksData,
+        data: taskData,
         getCoreRowModel: getCoreRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
-        getSortedRowModel: getSortedRowModel()
+        getSortedRowModel: getSortedRowModel(),
+        getRowModel: () => ({ rows: taskData })
     })
 
     return (
         <>
-        {table.getHeaderGroups().map((headerGroup) => (
-            <div key={headerGroup.id}>
-                {headerGroup.headers.map((header) => (
-                    <div key={header.id}>
-                        {header.column.columnDef.header}
-                    </div>
-                ))}
-            </div>
-        ))}
+        <div>
+            {table.getHeaderGroups().map((headerGroup) => (
+                <div key={headerGroup.id}>
+                    {headerGroup.headers.map((header) => (
+                        <div key={header.id}>
+                            {header.column.columnDef.header}
+                        </div>
+                    ))}
+                </div>
+            ))}
+            {table.getRowModel().rows.map((row) => (
+                <div key={row.id}>
+                    {row.getVisibleCells().map((cell) => (
+                        <div key={cell.id}>
+                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                        </div>
+                    ))}
+                </div>
+            ))}
+        </div>
         </>
     
     )

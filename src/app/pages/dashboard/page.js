@@ -48,7 +48,6 @@ const dashboard = () => {
 
     // console.log(values)
     const updatedValues = { ...values, responsible: responsible, email: user.email }
-    console.log(updatedValues)
     
     const [ createTask ] = useMutation(CREATE_TASK, {
         // update(proxy, { data: { createTask: data}}) {

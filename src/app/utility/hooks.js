@@ -13,7 +13,7 @@ export const useForm = (callback, initialState = {}) => {
     const onSubmit = (e) => {
         e.preventDefault()
         callback()
-        console.log(values)
+        // console.log(values)
     }
 
     return { onChange, onSubmit, values}
