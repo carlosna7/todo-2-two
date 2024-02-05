@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React from 'react'
 import { gql, useQuery } from '@apollo/client'
 import Multiselect from 'multiselect-react-dropdown'
 
@@ -15,7 +15,6 @@ const GET_USER = gql`
 `;
 
 const SelectComponent = ({ onSelectChange, selectedValues }) => {
-
 
     const { loading, error, data } = useQuery(GET_USER, {
         variables: { amount: 3 },

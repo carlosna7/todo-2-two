@@ -5,19 +5,22 @@ import { AuthContext } from '@/app/context/authContext'
 import React, { useContext, useState } from 'react'
 import { gql, useMutation } from '@apollo/client'
 import { useForm } from '@/app/utility/hooks'
+import TaskTable from '@/app/components/TaskTable'
 
 const dashboard = () => {
 
     const { user, logout } = useContext(AuthContext)
+    const [selectedValue, setSelectedValue] = useState([])
+    const [ errors, setErrors ] = useState([])
 
-    const [selectedValue, setSelectedValue] = useState([]);
-
+    const responsible = selectedValue.map(user => user.name)
+    
     const handleSelectChange = (selectedList) => {
         setSelectedValue(selectedList)
     }
-
-    // console.log(selectedValue)
-    const responsible = selectedValue.map(user => user.name)
+    
+    // console.log(selectedValue)    
+    // console.log(responsible)
 
     const CREATE_TASK = gql`
     mutation CreateTask($taskInput: TaskInput) {
@@ -30,39 +33,53 @@ const dashboard = () => {
     }     
     `
 
-    function createTaskCallback() {
+    async function createTaskCallback() {
         // event.preventDefault()
+
         console.log('callback aqui')
-        createTask()
+        await createTask()
     }
 
     const { onChange, onSubmit, values } = useForm(createTaskCallback, {
         name: '',
-        responsible: ''
+        responsible: '',
+        email: '',
     })
 
+    // console.log(values)
+    const updatedValues = { ...values, responsible: responsible, email: user.email }
+    console.log(updatedValues)
+    
     const [ createTask ] = useMutation(CREATE_TASK, {
-        update(proxy, { data: { createTask: data}}) {
-            
-        },
-        onError({ graphQlErrors }) {
-            setErrors(graphQlErrors)
-        },
-        variables: { taskInput: {
-            name: values.name,
-            responsible: responsible
-        }}
+        // update(proxy, { data: { createTask: data}}) {
+        //     console.log(data)
+        // },
+        // onError({ graphQlErrors }) {
+        //     setErrors(graphQlErrors)
+        // },
+        variables: { taskInput: updatedValues}
+
+        // variables: { taskInput: {
+        //     name: "task 02",
+        //     responsible: ["carlos", "eduardo", "teste01"],
+        //     email: "carlos@gmail.com"
+        // }}
+
     })
 
     const handleSubmit = (event) => {
         // event.preventDefault()
+        
+        // const updatedValues = { ...values, responsible: responsible }
 
-        // const taskInput = {
-        //     name: values.name,
-        //     responsible: responsible
-        // }
+        // console.log(updatedValues)
 
-        // createTask({ variables: { taskInput } });
+        // // const taskInput = {
+        // //     name: values.name,
+        // //     responsible: responsible
+        // // }
+
+        // createTask({ variables: { updatedValues } });
     }
 
     return (
@@ -88,6 +105,10 @@ const dashboard = () => {
                 <button type="submit" onClick={onSubmit}>Submit</button>
             </div>
 
+
+            <div>
+                <TaskTable/>
+            </div>
         </>
     )
 }
