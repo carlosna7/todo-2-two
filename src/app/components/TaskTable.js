@@ -10,6 +10,7 @@ import {
     getSortedRowModel,
     flexRender,
 } from '@tanstack/react-table'
+import { Thasadith } from 'next/font/google'
 
 const GET_TASKS = gql `
     query GetTasks($amount: Int) {
@@ -22,27 +23,34 @@ const GET_TASKS = gql `
     }
 `
 
+const dados = {
+    id: "1",
+    name: "teste",
+    responsible: "admin",
+    createdAt: "12:12"
+} 
+
 const columns = [
     {
         accessorKey: 'id',
         header: 'ID',
         // size: 1,
-        cell: (props) => <p>{props.getValue()}</p>
+        // cell: (props) => <p>{props.getValue()}</p>
     },
     {
         accessorKey: 'name',
         header: 'Name',
-        cell: (props) => <p>{props.getValue()}</p>
+        // cell: (props) => <p>{props.getValue()}</p>
     },
     {
         accessorKey: 'responsible',
         header: 'Responsible',
-        cell: (props) => <p>{props.getValue()}</p>
+        // cell: (props) => <p>{props.getValue()}</p>
     },
     {
         accessorKey: 'createdAt',
         header: 'createdAt',
-        cell: (props) => <p>{props.getValue()}</p>
+        // cell: (props) => <p>{props.getValue()}</p>
     },
 ]
 
@@ -52,7 +60,7 @@ const TaskTable = () => {
         variables: { amount: 3 },
     })
 
-    const [ taskData, setTaskData ] = useState()
+    const [ taskData, setTaskData ] = useState([])
 
     useEffect(() => {
 
@@ -62,39 +70,42 @@ const TaskTable = () => {
 
     }, [loading, error, data]);
 
-    console.log(taskData)
+    // console.log(taskData)
 
     const table = useReactTable({
         columns,
         data: taskData,
         getCoreRowModel: getCoreRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
-        getSortedRowModel: getSortedRowModel(),
-        getRowModel: () => ({ rows: taskData })
-    })
+        getSortedRowModel: getSortedRowModel()
+    }) 
 
     return (
         <>
-        <div>
-            {table.getHeaderGroups().map((headerGroup) => (
-                <div key={headerGroup.id}>
-                    {headerGroup.headers.map((header) => (
-                        <div key={header.id}>
-                            {header.column.columnDef.header}
-                        </div>
+            <table>
+                <thead>
+                    {table.getHeaderGroups().map((headerGroup) => (
+                        <tr key={headerGroup.id}>
+                            {headerGroup.headers.map((header) => (
+                                <th key={header.id}>
+                                    {header.column.columnDef.header}
+                                </th>
+                            ))}
+                        </tr>
                     ))}
-                </div>
-            ))}
-            {table.getRowModel().rows.map((row) => (
-                <div key={row.id}>
-                    {row.getVisibleCells().map((cell) => (
-                        <div key={cell.id}>
-                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                        </div>
+                </thead>
+                <tbody>
+                    {table.getRowModel().rows.map(row => (
+                        <tr key={row.id}>
+                            {row.getVisibleCells().map(cell => (
+                                <td key={cell.id}>
+                                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                </td>
+                            ))}
+                        </tr>
                     ))}
-                </div>
-            ))}
-        </div>
+                </tbody>
+            </table>
         </>
     
     )

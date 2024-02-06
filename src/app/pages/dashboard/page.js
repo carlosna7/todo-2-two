@@ -66,21 +66,6 @@ const dashboard = () => {
 
     })
 
-    const handleSubmit = (event) => {
-        // event.preventDefault()
-        
-        // const updatedValues = { ...values, responsible: responsible }
-
-        // console.log(updatedValues)
-
-        // // const taskInput = {
-        // //     name: values.name,
-        // //     responsible: responsible
-        // // }
-
-        // createTask({ variables: { updatedValues } });
-    }
-
     return (
 
         <>
@@ -97,7 +82,7 @@ const dashboard = () => {
                 }
             </div>
 
-            <div className='bg-gray-100 w-96 p-4 m-4 flex flex-col gap-4' onSubmit={handleSubmit}>
+            <div className='bg-gray-100 w-96 p-4 m-4 flex flex-col gap-4'>
                 <SelectComponent onSelectChange={handleSelectChange} selectedValues={selectedValue} onChange={onChange} />
                 <label>name</label>
                 <input type='name' name='name' onChange={onChange}/>
