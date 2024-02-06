@@ -34,9 +34,7 @@ const dashboard = () => {
     `
 
     async function createTaskCallback() {
-        // event.preventDefault()
-
-        console.log('callback aqui')
+        // console.log('callback aqui')
         await createTask()
     }
 

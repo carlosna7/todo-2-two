@@ -57,7 +57,7 @@ const columns = [
 const TaskTable = () => {
 
     const { loading, error, data } = useQuery(GET_TASKS, {
-        variables: { amount: 3 },
+        variables: { amount: 30 },
     })
 
     const [ taskData, setTaskData ] = useState([])
